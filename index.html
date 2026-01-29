@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<title>Spanisch – Gruppen</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+:root{
+  --bg:#f4f5f2;
+  --card:#ffffff;
+  --text:#2f3a2f;
+  --muted:#7a847a;
+  --accent:#6b7f5b;
+}
+body{
+  margin:0;
+  background:var(--bg);
+  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Helvetica Neue",Arial,sans-serif;
+}
+.wrapper{
+  max-width:1600px;
+  margin:40px auto;
+  padding:0 24px;
+}
+h1{
+  text-align:center;
+  font-size:24px;
+  margin-bottom:28px;
+  color:var(--text);
+}
+.grid{
+  display:grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap:20px;
+}
+@media (max-width:1200px){
+  .grid{ grid-template-columns: repeat(3, 1fr); }
+}
+@media (max-width:900px){
+  .grid{ grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width:600px){
+  .grid{ grid-template-columns: 1fr; }
+}
+.card{
+  background:var(--card);
+  padding:20px;
+  border-radius:18px;
+  box-shadow:0 12px 28px rgba(0,0,0,.08);
+  cursor:pointer;
+  transition:transform .15s ease, box-shadow .15s ease;
+}
+.card:hover{
+  transform:translateY(-2px);
+  box-shadow:0 18px 36px rgba(0,0,0,.10);
+}
+.card h2{
+  margin:0 0 8px 0;
+  font-size:18px;
+  color:var(--text);
+}
+.card p{
+  margin:0;
+  font-size:14px;
+  color:var(--muted);
+}
+.error{
+  margin-top:24px;
+  padding:16px;
+  background:#fff3f3;
+  border:1px solid #ffd0d0;
+  border-radius:12px;
+  color:#7a1f1f;
+  display:none;
+}
+</style>
+</head>
+<body>
+
+<div class="wrapper">
+  <h1>Vokabel-Gruppen</h1>
+  <div class="grid" id="grid"></div>
+  <div class="error" id="error">
+    ⚠️ Vokabeln konnten nicht geladen werden.<br>
+    Prüfe, ob <code>vokabeln.js</code> im gleichen Ordner liegt und <code>vocabGroups</code> definiert.
+  </div>
+</div>
+
+<script src="vokabeln.js"></script>
+<script>
+(function(){
+  var grid = document.getElementById("grid");
+  var error = document.getElementById("error");
+
+  if (typeof vocabGroups === "undefined" || !Array.isArray(vocabGroups)) {
+    error.style.display = "block";
+    return;
+  }
+
+  for (var i = 0; i < vocabGroups.length; i++) {
+    var g = vocabGroups[i];
+    var card = document.createElement("div");
+    card.className = "card";
+    card.innerHTML =
+      "<h2>" + (i+1) + ". " + g.title + "</h2>" +
+      "<p>" + g.words.length + " Vokabeln</p>";
+    (function(idx){
+      card.onclick = function(){
+        window.location.href = "trainer.html?group=" + idx;
+      };
+    })(i);
+    grid.appendChild(card);
+  }
+})();
+</script>
+
+</body>
+</html>
