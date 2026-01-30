@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<title>Bieno – Vokabel-Gruppen</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+:root{
+  --bg:#f4f5f2;
+  --card:#ffffff;
+  --text:#2f3a2f;
+  --muted:#7a847a;
+}
+body{
+  margin:0;
+  background:var(--bg);
+  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Helvetica Neue",Arial,sans-serif;
+}
+.wrapper{
+  max-width:1600px;
+  margin:32px auto;
+  padding:0 20px;
+}
+header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:20px;
+}
+header h1{
+  margin:0;
+  font-size:24px;
+  color:var(--text);
+}
+header a{
+  color:var(--muted);
+  text-decoration:none;
+  font-size:14px;
+}
+.grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:18px;
+}
+@media(max-width:1200px){.grid{grid-template-columns:repeat(3,1fr);}}
+@media(max-width:900px){.grid{grid-template-columns:repeat(2,1fr);}}
+@media(max-width:600px){.grid{grid-template-columns:1fr;}}
+.card{
+  background:var(--card);
+  padding:18px;
+  border-radius:18px;
+  box-shadow:0 12px 28px rgba(0,0,0,.08);
+  cursor:pointer;
+}
+.card h2{
+  margin:0 0 6px 0;
+  font-size:17px;
+  color:var(--text);
+}
+.card p{
+  margin:0;
+  font-size:13px;
+  color:var(--muted);
+}
+.error{
+  display:none;
+  margin-top:16px;
+  padding:14px;
+  border-radius:12px;
+  background:#fff3f3;
+  color:#7a1f1f;
+}
+</style>
+</head>
+<body>
+<div class="wrapper">
+  <header>
+    <h1>Vokabel-Gruppen</h1>
+    <a href="index.html">← Start</a>
+  </header>
+
+  <div class="grid" id="groups"></div>
+  <div class="error" id="error">
+    ⚠️ Vokabeln konnten nicht geladen werden.
+  </div>
+</div>
+
+<script src="vokabeln.js"></script>
+<script>
+(function(){
+  const grid=document.getElementById("groups");
+  const error=document.getElementById("error");
+  if(typeof vocabGroups==="undefined"){
+    error.style.display="block";
+    return;
+  }
+  vocabGroups.forEach((g,i)=>{
+    const d=document.createElement("div");
+    d.className="card";
+    d.innerHTML="<h2>"+(i+1)+". "+g.title+"</h2><p>"+g.words.length+" Vokabeln</p>";
+    d.onclick=()=>location.href="trainer.html?group="+i;
+    grid.appendChild(d);
+  });
+})();
+</script>
+</body>
+</html>

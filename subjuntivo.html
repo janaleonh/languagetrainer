@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<title>Subjuntivo Trainer</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+:root{
+  --bg:#f4f5f2; --card:#ffffff; --text:#2f3a2f; --muted:#7a847a; --accent:#6b7f5b;
+}
+*{box-sizing:border-box;}
+body{margin:0;background:var(--bg);font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Helvetica Neue",Arial,sans-serif;min-height:100vh;display:flex;justify-content:center;align-items:center;padding:16px;}
+.container{width:100%;max-width:520px;}
+.menu{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;}
+.menu button{background:none;border:none;color:var(--accent);font-size:14px;}
+.card{background:var(--card);border-radius:20px;padding:22px;box-shadow:0 16px 32px rgba(0,0,0,.08);}
+.task{font-size:18px;margin-bottom:14px;color:var(--text);}
+.sentence{font-size:20px;margin-bottom:18px;font-weight:500;}
+input{width:100%;padding:14px;font-size:16px;border-radius:12px;border:1px solid #d0d4ce;margin-bottom:14px;}
+.feedback{min-height:22px;margin-bottom:14px;font-size:14px;}
+.correct{color:#3d6b3d;}
+.wrong{color:#9b3b3b;}
+button.main{width:100%;padding:14px;border:none;border-radius:12px;background:var(--accent);color:white;font-size:16px;}
+.footer{margin-top:10px;text-align:center;font-size:12px;color:var(--muted);}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="menu">
+    <button onclick="location.href='index.html'">← Start</button>
+    <div>Subjuntivo</div>
+    <div></div>
+  </div>
+  <div class="card">
+    <div class="task">Setze den <b>Subjuntivo</b> richtig ein:</div>
+    <div class="sentence" id="sentence"></div>
+    <input id="answer" placeholder="Subjuntivo-Form eingeben">
+    <div class="feedback" id="feedback"></div>
+    <button class="main" onclick="check()">Prüfen</button>
+    <div class="footer" id="counter"></div>
+  </div>
+</div>
+<script>
+const tasks=[
+ {s:"Espero que tú ___ (venir) mañana.",a:"vengas"},
+ {s:"Es importante que ella ___ (estudiar) más.",a:"estudie"},
+ {s:"No creo que ellos ___ (tener) razón.",a:"tengan"},
+ {s:"Buscamos a alguien que ___ (saber) la verdad.",a:"sepa"},
+ {s:"Quiero que me ___ (decir) la verdad.",a:"digas"}
+];
+let i=0;
+function load(){
+  sentence.textContent=tasks[i].s;
+  answer.value="";
+  feedback.textContent="";
+  counter.textContent=(i+1)+" / "+tasks.length;
+}
+function check(){
+  const val=answer.value.trim().toLowerCase();
+  if(!val)return;
+  if(val===tasks[i].a){
+    feedback.textContent="✓ Richtig";
+    feedback.className="feedback correct";
+    setTimeout(()=>{i=(i+1)%tasks.length;load();},800);
+  }else{
+    feedback.textContent="✗ Falsch – richtig wäre: "+tasks[i].a;
+    feedback.className="feedback wrong";
+  }
+}
+load();
+</script>
+</body>
+</html>

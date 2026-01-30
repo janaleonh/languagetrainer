@@ -2,7 +2,7 @@
 <html lang="de">
 <head>
 <meta charset="UTF-8">
-<title>BienLindo</title>
+<title>Bieno</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
 :root{
@@ -18,101 +18,71 @@ body{
   font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Helvetica Neue",Arial,sans-serif;
 }
 .wrapper{
-  max-width:1600px;
-  margin:40px auto;
-  padding:0 24px;
+  max-width:1100px;
+  margin:48px auto;
+  padding:0 20px;
+  text-align:center;
 }
 h1{
-  text-align:center;
-  font-size:24px;
-  margin-bottom:28px;
+  margin-bottom:12px;
+  font-size:32px;
   color:var(--text);
+}
+p.sub{
+  margin-bottom:36px;
+  color:var(--muted);
+  font-size:16px;
 }
 .grid{
   display:grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap:20px;
+  grid-template-columns:repeat(2,1fr);
+  gap:28px;
 }
-@media (max-width:1200px){
-  .grid{ grid-template-columns: repeat(3, 1fr); }
-}
-@media (max-width:900px){
-  .grid{ grid-template-columns: repeat(2, 1fr); }
-}
-@media (max-width:600px){
-  .grid{ grid-template-columns: 1fr; }
+@media(max-width:800px){
+  .grid{ grid-template-columns:1fr; }
 }
 .card{
   background:var(--card);
-  padding:20px;
-  border-radius:18px;
-  box-shadow:0 12px 28px rgba(0,0,0,.08);
-  cursor:pointer;
-  transition:transform .15s ease, box-shadow .15s ease;
-}
-.card:hover{
-  transform:translateY(-2px);
-  box-shadow:0 18px 36px rgba(0,0,0,.10);
+  padding:32px;
+  border-radius:22px;
+  box-shadow:0 18px 36px rgba(0,0,0,.08);
 }
 .card h2{
-  margin:0 0 8px 0;
-  font-size:18px;
+  margin:0 0 10px 0;
   color:var(--text);
 }
 .card p{
-  margin:0;
-  font-size:14px;
+  margin:0 0 18px 0;
   color:var(--muted);
 }
-.error{
-  margin-top:24px;
-  padding:16px;
-  background:#fff3f3;
-  border:1px solid #ffd0d0;
-  border-radius:12px;
-  color:#7a1f1f;
-  display:none;
+.card a{
+  display:inline-block;
+  padding:14px 22px;
+  border-radius:14px;
+  background:var(--accent);
+  color:white;
+  text-decoration:none;
+  font-weight:500;
 }
 </style>
 </head>
 <body>
-
 <div class="wrapper">
-  <h1>BienLindo - Vokabeltrainer</h1>
-  <div class="grid" id="grid"></div>
-  <div class="error" id="error">
-    ⚠️ Vokabeln konnten nicht geladen werden.<br>
-    Prüfe, ob <code>vokabeln.js</code> im gleichen Ordner liegt und <code>vocabGroups</code> definiert.
+  <h1>Bieno</h1>
+  <p class="sub">Üben statt pauken. Eine ruhige Plattform für Sprachen.</p>
+
+  <div class="grid">
+    <div class="card">
+      <h2>Vokabeln</h2>
+      <p>Wortschatz in thematischen Gruppen trainieren.</p>
+      <a href="gruppen.html">Zu den Gruppen</a>
+    </div>
+    <div class="card">
+      <h2>Subjuntivo</h2>
+      <p>Gezielte Grammatikübungen zum spanischen Subjuntivo.</p>
+      <a href="subjuntivo.html">Zur Übung</a>
+    </div>
   </div>
 </div>
-
-<script src="vokabeln.js"></script>
-<script>
-(function(){
-  var grid = document.getElementById("grid");
-  var error = document.getElementById("error");
-
-  if (typeof vocabGroups === "undefined" || !Array.isArray(vocabGroups)) {
-    error.style.display = "block";
-    return;
-  }
-
-  for (var i = 0; i < vocabGroups.length; i++) {
-    var g = vocabGroups[i];
-    var card = document.createElement("div");
-    card.className = "card";
-    card.innerHTML =
-      "<h2>" + (i+1) + ". " + g.title + "</h2>" +
-      "<p>" + g.words.length + " Vokabeln</p>";
-    (function(idx){
-      card.onclick = function(){
-        window.location.href = "trainer.html?group=" + idx;
-      };
-    })(i);
-    grid.appendChild(card);
-  }
-})();
-</script>
-
 </body>
 </html>
